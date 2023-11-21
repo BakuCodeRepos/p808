@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "about",
     "account.apps.AccountConfig",
     "contact.apps.ContactConfig",
+    "product.apps.ProductConfig",
+    'modeltranslation',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -69,6 +72,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.context_processors.context_processors.subject_renderer",
             ],
         },
     },
@@ -119,6 +123,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('az', 'Azerbaijan'),
+    ('ru', 'Russian'),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+    )
+
+# MODELTRANSLATION_DEFAULT_LANGUAGE = 'az'
+MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+MODELTRANSLATION_LANGUAGES = ("ru", "az", "en")
 
 LANGUAGE_CODE = "az"
 
