@@ -13,7 +13,7 @@ urlpatterns += i18n_patterns(
     path('', include('account.urls')),
     path("", include("about.urls")),
     path("", include("contact.urls")),
-    # path('', include('product.urls')),
+    path('', include('product.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 )
 
