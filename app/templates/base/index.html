@@ -115,7 +115,7 @@
                             <a href="#" class="nav-link" data-toggle="dropdown">{{ category.name }}<i class="fa fa-angle-down float-right mt-1"></i></a>
                             <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                 {% for subcategory in category.child.all %}
-                                <a href="" class="dropdown-item">{{ subcategory.name }}</a>
+                                <a href="{% url 'products-by-category' subcategory.slug %}" class="dropdown-item">{{ subcategory.name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{% url 'index' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">{% trans 'Home' %}</a>
                             <a href="{% url 'about' %}" class="nav-item nav-link{% if request.path == '/about' %} active{% endif %}">{% trans 'About' %}</a>
-                            <a href="detail.html" class="nav-item nav-link">{% trans 'Products' %}</a>
+                            <a href="{% url 'products' %}" class="nav-item nav-link{% if request.path == '/products' %} active{% endif %}">{% trans 'Products' %}</a>
                             <a href="{% url 'contact' %}" class="nav-item nav-link{% if request.path == '/contact' %} active{% endif %}">{% trans 'Contact' %}</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">

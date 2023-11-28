@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "account.apps.AccountConfig",
     "contact.apps.ContactConfig",
     "product.apps.ProductConfig",
+    "order.apps.OrderConfig",
     'modeltranslation',
 ]
 
