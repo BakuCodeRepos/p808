@@ -1,6 +1,5 @@
 from django.db import models
 
-
 ORDER_STATUSES = (
     (0, 'BASKET'),
     (1, 'CHECKOUT'),
@@ -94,6 +93,7 @@ class Color(BaseModel):
 
 class Product(BaseModel):
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
     price = models.DecimalField(
         max_digits=16,
         decimal_places=2,
@@ -171,9 +171,30 @@ class ProductItem(BaseModel):
     
     @property
     def get_total_price(self):
-        return self.quantity * self.product.price
+        return self.quantity * self.product.price # type: ignore
     
     class Meta:
         verbose_name = 'Product item'
         verbose_name_plural = 'Product items'
         default_related_name = 'product_items'
+
+
+class Comment(BaseModel):
+    user = models.ForeignKey(
+        'account.Account',
+        on_delete=models.CASCADE,
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        null=True
+    )
+    text = models.TextField()
+
+    def __str__(self) -> str:
+        return self.user.email
+    
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+        default_related_name='comments'
