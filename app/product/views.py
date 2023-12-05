@@ -27,7 +27,7 @@ def product_detail(request, product_slug):
     ).distinct()
 
     reviews = Comment.objects.filter(product=product).order_by('-created_at')
-
+    review_count = reviews.count()
     form = CommentForm()
 
 
@@ -38,11 +38,13 @@ def product_detail(request, product_slug):
             form.instance.product = product
             form.save()
             return redirect(reverse("product-detail", args=(product.slug,)))
+
         
     context = {
         "product": product,
         'other_products': other_products,
         'form': form,
-        'reviews': reviews
+        'reviews': reviews,
+        'review_count': review_count,
         }
     return render(request, "product/detail.html", context)
