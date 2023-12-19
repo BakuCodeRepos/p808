@@ -38,8 +38,8 @@
                         <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
                             {% for size in product.product_type.sizes.all %}
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="{{ size.id }}" name="size">
-                                <label class="custom-control-label" for="{{ size.id }}">{{ size.name }}</label>
+                                <input onclick="setChecked(this, 'size')" type="radio" class="custom-control-input" id="size-{{ size.id }}" value="{{ size.id }}" name="size">
+                                <label class="custom-control-label" for="size-{{ size.id }}">{{ size.name }}</label>
                             </div>
                             {% endfor %}
                     </div>
@@ -47,8 +47,8 @@
                         <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
                             {% for color in product.product_type.colors.all %}
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="{{ color.id }}" name="color">
-                                <label class="custom-control-label" for="{{ color.id }}">{{ color.name }}</label>
+                                <input onclick="setChecked(this, 'color')" type="radio" class="custom-control-input" id="color-{{ color.id }}" value="{{ color.id }}" name="color">
+                                <label class="custom-control-label" for="color-{{ color.id }}">{{ color.name }}</label>
                             </div>
                             {% endfor %}
                     </div>
@@ -59,14 +59,14 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary text-center" value="1">
+                            <input type="text" id="product-qty" class="form-control bg-secondary text-center" value="1">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                        <button onclick="createOrder()" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                     </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
@@ -159,4 +159,12 @@
     </div>
     <!-- Products End -->
 
+{% endblock %}
+
+{% block js %}
+    <script>
+        let productID = '{{ product.id }}'
+        let order_create_url = "{% url 'create-product-item' %}"
+    </script>
+    <script src="{% static 'apps/product/createOrder.js' %}"></script>
 {% endblock %}

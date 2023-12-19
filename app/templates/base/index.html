@@ -90,7 +90,7 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
+                <a href="{% url 'basket' %}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
@@ -277,6 +277,11 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        let csrftoken_ = "{{ csrf_token }}"
+    </script>
+    {% block js %}
+    {% endblock %}
 </body>
 
 </html>
