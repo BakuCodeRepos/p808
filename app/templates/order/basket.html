@@ -1,6 +1,46 @@
 {% extends "base/index.html" %}
 {% load static i18n %}
 
+{% block css %}
+<style>
+    /* Container for the quantity input and buttons */
+        .quantity-container {
+            display: contents;
+            flex-direction: column;
+            align-items: center;
+            width: 50px; /* Adjust the width as needed */
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        /* Style for the minus and plus buttons */
+        .quantity-button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Hover effect for buttons */
+        .quantity-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for the quantity input */
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: none;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+</style>
+{% endblock %}
+
 {% block content %}
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
@@ -32,26 +72,18 @@
                     </thead>
                     <tbody class="align-middle">
                         {% for item in items %}
-                            <tr>
-                                <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> {{ item.product.name }}</td>
-                                <td class="align-middle">{{ item.product.price }}</td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus" >
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{ item.quantity }}">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="align-middle">{{ item.get_total_price }}</td>
-                                <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                            <tr id="{{ item.id }}">
+                                <td class="align-middle"><img src="{{ item.product.image.url }}" alt="" style="width: 50px; left: -15% !important;"> {{ item.product.name }}</td>
+                            <td class="align-middle"><span id="price-{{ item.id }}">{{ item.product.price }}</span> AZN</td>
+                            <td class="align-middle">
+                                <div class="quantity-container">
+                                    <button class="quantity-button" id="minus-button-{{ item.id }}" onclick="calcMinusTotal('{{ item.id }}')">-</button>
+                                    <input type="number" class="quantity-input" id="qty-{{ item.id }}" value="{{ item.quantity }}">
+                                    <button class="quantity-button" id="plus-button-{{ item.id }}" onclick="calcPlusTotal('{{ item.id }}')">+</button>
+                                </div>
+                            </td>
+                            <td class="align-middle"><span name="order-total" id="total-{{ item.id }}">{{ item.get_total_price }}</span> AZN</td>
+                            <td class="align-middle"><button onclick="removeRow('#{{ item.id }}', '{{ item.id }}')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -73,23 +105,33 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">$150</h6>
+                            <h6 class="font-weight-medium"><span id="sub-total">0</span> AZN</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">$10</h6>
+                            <h6 class="font-weight-medium"><span id='shipping'>0</span> AZN</h6>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">$160</h5>
+                            <h5 class="font-weight-bold"><span id="final-total">0</span> AZN</h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <button id="checkout-btn" onclick="createMainOrder()" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Cart End -->
+{% endblock %}
+
+{% block js %}
+<script>
+    let order_delete_url = "{% url 'delete-product-item' 1 %}"
+    document.addEventListener("DOMContentLoaded", function(event) {
+        calcTotal();
+    });
+</script>
+<script src="{% static 'apps/order/basket.js' %}"></script>
 {% endblock %}

@@ -27,6 +27,8 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
 </head>
 
 <body>
@@ -92,7 +94,7 @@
                 </a>
                 <a href="{% url 'basket' %}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span id="basket-order-count" class="badge">{{ basket_order_count }}</span>
                 </a>
             </div>
         </div>
