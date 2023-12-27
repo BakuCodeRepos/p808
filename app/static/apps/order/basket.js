@@ -62,3 +62,37 @@ function calcTotal() {
     document.getElementById('shipping').innerHTML = parseFloat(shipping.toFixed(2));
     document.getElementById('final-total').innerHTML = parseFloat((shipping + result).toFixed(2));
   }
+
+
+function createOrder() {
+    $.ajax({
+      method: "POST",
+      url: order_create_url,
+      headers: { "X-CSRFToken": csrftoken_ },
+      data: {
+        subtotal: document.getElementById('sub-total').innerText,
+        total: document.getElementById("final-total").innerText,
+        shipping: document.getElementById("shipping").innerText,
+        items: getItems(),
+      },
+      dataType: "json",
+      success: function (resp) {
+        console.log('gonderdiyim data', data);
+        console.log('getItems() funksiyasinin yigdigi', getItems());
+        console.log('qayidan cavab', resp);
+        window.location.href = checkout_url;
+      },
+      error: function(data) {
+        console.log('error cixdiiiii', data);
+      }
+    });
+  }
+
+function getItems() {
+    data = [];
+    let items = document.getElementsByName('product-items'); // tr elements
+    for (let i of items) {
+      data.push(i.getAttribute('id'))
+    }
+    return JSON.stringify(data)
+  }  

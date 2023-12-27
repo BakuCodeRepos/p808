@@ -72,14 +72,14 @@
                     </thead>
                     <tbody class="align-middle">
                         {% for item in items %}
-                            <tr id="{{ item.id }}">
+                            <tr id="{{ item.id }}" name="product-items">
                                 <td class="align-middle"><img src="{{ item.product.image.url }}" alt="" style="width: 50px; left: -15% !important;"> {{ item.product.name }}</td>
                             <td class="align-middle"><span id="price-{{ item.id }}">{{ item.product.price }}</span> AZN</td>
                             <td class="align-middle">
                                 <div class="quantity-container">
-                                    <button class="quantity-button" id="minus-button-{{ item.id }}" onclick="calcMinusTotal('{{ item.id }}')">-</button>
+                                    <button style="border-radius: 7px;" class="quantity-button" id="minus-button-{{ item.id }}" onclick="calcMinusTotal('{{ item.id }}')">-</button>
                                     <input type="number" class="quantity-input" id="qty-{{ item.id }}" value="{{ item.quantity }}">
-                                    <button class="quantity-button" id="plus-button-{{ item.id }}" onclick="calcPlusTotal('{{ item.id }}')">+</button>
+                                    <button style="border-radius: 7px;" class="quantity-button" id="plus-button-{{ item.id }}" onclick="calcPlusTotal('{{ item.id }}')">+</button>
                                 </div>
                             </td>
                             <td class="align-middle"><span name="order-total" id="total-{{ item.id }}">{{ item.get_total_price }}</span> AZN</td>
@@ -117,7 +117,7 @@
                             <h5 class="font-weight-bold">Total</h5>
                             <h5 class="font-weight-bold"><span id="final-total">0</span> AZN</h5>
                         </div>
-                        <button id="checkout-btn" onclick="createMainOrder()" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <button id="checkout-btn" onclick="createOrder()" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                     </div>
                 </div>
             </div>
@@ -129,6 +129,8 @@
 {% block js %}
 <script>
     let order_delete_url = "{% url 'delete-product-item' 1 %}"
+    let order_create_url = "{% url 'create-order' %}"
+    let checkout_url = "{% url 'checkout' %}"
     document.addEventListener("DOMContentLoaded", function(event) {
         calcTotal();
     });
