@@ -124,9 +124,27 @@ class Product(BaseModel):
         null=True,
         blank=True
     )
+    has_discount = models.BooleanField(default=False)
+    old_price = models.DecimalField(
+        'əvvəlki qiymət',
+        decimal_places=2,
+        max_digits=10,
+        null=True,
+        blank=True
+    )
 
     def __str__(self) -> str:
         return self.name
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.cache_price = self.price
+
+    def save(self):
+        if self.cache_price and self.cache_price != self.price:
+            self.has_discount = self.cache_price > self.price
+            self.old_price = self.cache_price
+        return super().save()
     
     class Meta:
         verbose_name = 'Product'

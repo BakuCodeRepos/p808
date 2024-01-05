@@ -8,3 +8,10 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         exclude = ('is_done',)
+
+
+class OrderIsDoneSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Order
+        fields = ('is_done',)

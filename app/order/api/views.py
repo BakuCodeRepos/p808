@@ -2,7 +2,7 @@ from rest_framework import generics
 from product.api.serializers import ProductItemSerializer
 from product.models import ProductItem
 from ..models import Order
-from .serializers import OrderSerializer
+from .serializers import OrderIsDoneSerializer, OrderSerializer
 from rest_framework.response import Response
 import json
 
@@ -37,3 +37,18 @@ class OrderCreateAPIView(generics.CreateAPIView):
                     # instance.items.add(obj)
 
         return Response({"detail": "OK", 'data': data}, status=201)
+
+
+class OrderIsDoneAPIView(generics.UpdateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderIsDoneSerializer
+    lookup_field = 'id'
+
+    def put(self, request, *args, **kwargs):
+        order_id = self.kwargs.get('id', None) 
+        order = Order.objects.get(id=order_id)
+        order.is_done = True
+        order_items = ProductItem.objects.filter(order=order)
+        order_items.update(status=2)
+        print('order_items', order_items)
+        return super().put(request, *args, **kwargs)

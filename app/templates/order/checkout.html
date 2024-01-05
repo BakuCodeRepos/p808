@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button id="order-button" disabled onclick="isDoneMainOrder()" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Order</button>
+                        <button id="order-button" disabled onclick="isDoneOrder()" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Order</button>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,9 @@
 
 {% block js %}
 <script>
-    let order_delete_url = "{% url 'delete-product-item' 1 %}"
+    let is_done_url = "{% url 'order-is-done' order.id %}"
+    let home_url = "{% url 'index' %}"
 </script>
+
 <script src="{% static 'apps/order/checkout.js' %}"></script>
 {% endblock %}

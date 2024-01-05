@@ -20,3 +20,24 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - {self.total}"
+
+
+class WishList(models.Model):
+    user = models.ForeignKey(
+        'account.Account',
+        related_name='wish_list',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    product = models.ManyToManyField(
+        'product.Product',
+        related_name='wish_list'
+    )
+
+    class Meta:
+        verbose_name = 'Wish list'
+        verbose_name_plural = 'Wish list'
+
+    def __str__(self):
+        return f"{self.user.email}"

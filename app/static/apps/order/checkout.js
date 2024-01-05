@@ -1,4 +1,4 @@
-function isDoneMainOrder() {
+function isDoneOrder() {
     $.ajax({
       method: "PUT",
       url: is_done_url,
