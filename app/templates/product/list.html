@@ -252,6 +252,7 @@
                 src="{% if product.image %}{{ product.image.url }}{% endif %}"
                 alt=""
               />
+              <i id="heart-{{ product.id }}" class="fas fa-heart position-absolute" style="cursor: pointer; top: 10px; right: 10px; font-size: 24px;{% if product.has_added_to_wish_list %} color: red{% endif %}" onclick="selectWishFunc('{{ product.id }}')"></i>
             </div>
             <div
               class="card-body border-left border-right text-center p-0 pt-4 pb-3"

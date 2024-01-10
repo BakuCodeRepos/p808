@@ -1,4 +1,6 @@
 from django.db import models
+from order.models import WishList
+from utils.current_request import get_current_request
 
 ORDER_STATUSES = (
     (0, 'BASKET'),
@@ -149,6 +151,13 @@ class Product(BaseModel):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+    @property
+    def has_added_to_wish_list(self):
+        request = get_current_request()
+        wl = WishList.objects.filter(user=request.user).first()
+        product = Product.objects.filter(id=self.id).first()
+        return bool(wl and product and product in wl.product.all())
 
 
 class ProductItem(BaseModel):

@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import generic
@@ -48,3 +49,19 @@ def product_detail(request, product_slug):
         'review_count': review_count,
         }
     return render(request, "product/detail.html", context)
+
+
+def search(request):
+    query = request.GET.get('search')
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    context = {
+        'result_count': len(products),
+        'query': query,
+        'results': products
+    }
+
+    return render(request, 'product/search.html', context)

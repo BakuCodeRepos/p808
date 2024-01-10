@@ -10,4 +10,6 @@ urlpatterns = [
         views.OrderIsDoneAPIView.as_view(),
         name="order-is-done",
     ),
+    path('add-to-wish-list', views.AddToWishListAPIView.as_view(), name='add-to-wish-list'),
+    path('remove-from-wish-list', views.RemoveFromWishListAPIView.as_view(), name='remove-to-wish-list'),
 ]

@@ -140,6 +140,7 @@
                     <div class="card product-item border-0">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                             <img class="img-fluid w-100" src="{% if other_product.image %}{{ other_product.image.url }}{% endif %}" alt="">
+                            <i id="heart-{{ other_product.id }}" class="fas fa-heart position-absolute" style="cursor: pointer; top: 10px; right: 10px; font-size: 24px;{% if other_product.has_added_to_wish_list %} color: red{% endif %}" onclick="selectWishFunc('{{ other_product.id }}')"></i>
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">{{ other_product.name }}</h6>

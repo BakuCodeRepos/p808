@@ -76,9 +76,9 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+                <form method="GET" action="{% url 'search' %}">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input name="search" type="text" class="form-control" placeholder="Search for products">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -88,9 +88,9 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
+                <a href="{% url 'wishlist' %}" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span id="wish-list-count" class="badge">{{ wish_list_count }}</span>
                 </a>
                 <a href="{% url 'basket' %}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
@@ -281,7 +281,10 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script>
         let csrftoken_ = "{{ csrf_token }}"
+        let add_to_wish_list_url = "{% url 'add-to-wish-list' %}"
+        let remove_from_wish_list_url = "{% url 'remove-to-wish-list' %}"
     </script>
+    <script src="{% static 'apps/order/wishlist.js' %}"></script>
     {% block js %}
     {% endblock %}
 </body>

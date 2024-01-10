@@ -10,7 +10,7 @@
             <div class="d-inline-flex">
                 <p class="m-0"><a href="">Home</a></p>
                 <p class="m-0 px-2">-</p>
-                <p class="m-0">Shop</p>
+                <p class="m-0"><b style="color: black">{{ result_count }}</b> {% if result_count == 0 or result_count == 1 %}{% trans 'result found for' %}{% else %}{% trans 'results found for' %}{% endif %} "{{ query }}"</p>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                     </div>
-                    {% for product in wishlist.product.all %}
+                    {% for product in results %}
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
