@@ -15,7 +15,9 @@ class ProductItemCreateAPIView(generics.CreateAPIView):
         instance = serializer.save()
         instance.user = request.user
         instance.save()
-        
+        # increasing count of adding product to basket
+        instance.product.adding_to_basket_count += 1
+        instance.product.save()
 
         data = serializer.data
 

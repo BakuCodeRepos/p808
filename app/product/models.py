@@ -39,6 +39,11 @@ class Category(BaseModel):
 
 class Brand(BaseModel):
     name = models.CharField(max_length=255)
+    logo = models.FileField(
+        upload_to='brands',
+        null=True,
+        blank=True
+    )
 
     def __str__(self) -> str:
         return self.name
@@ -133,6 +138,9 @@ class Product(BaseModel):
         max_digits=10,
         null=True,
         blank=True
+    )
+    adding_to_basket_count = models.PositiveIntegerField(
+        default=0
     )
 
     def __str__(self) -> str:

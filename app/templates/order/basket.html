@@ -71,21 +71,23 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        {% for item in items %}
-                            <tr id="{{ item.id }}" name="product-items">
-                                <td class="align-middle"><img src="{{ item.product.image.url }}" alt="" style="width: 50px; left: -15% !important;"> {{ item.product.name }}</td>
-                            <td class="align-middle"><span id="price-{{ item.id }}">{{ item.product.price }}</span> AZN</td>
-                            <td class="align-middle">
-                                <div class="quantity-container">
-                                    <button style="border-radius: 7px;" class="quantity-button" id="minus-button-{{ item.id }}" onclick="calcMinusTotal('{{ item.id }}')">-</button>
-                                    <input type="number" class="quantity-input" id="qty-{{ item.id }}" value="{{ item.quantity }}">
-                                    <button style="border-radius: 7px;" class="quantity-button" id="plus-button-{{ item.id }}" onclick="calcPlusTotal('{{ item.id }}')">+</button>
-                                </div>
-                            </td>
-                            <td class="align-middle"><span name="order-total" id="total-{{ item.id }}">{{ item.get_total_price }}</span> AZN</td>
-                            <td class="align-middle"><button onclick="removeRow('#{{ item.id }}', '{{ item.id }}')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                            </tr>
-                        {% endfor %}
+                        {% if items %}
+                            {% for item in items %}
+                                <tr id="{{ item.id }}" name="product-items">
+                                    <td class="align-middle"><img src="{{ item.product.image.url }}" alt="" style="width: 50px; left: -15% !important;"> {{ item.product.name }}</td>
+                                <td class="align-middle"><span id="price-{{ item.id }}">{{ item.product.price }}</span> AZN</td>
+                                <td class="align-middle">
+                                    <div class="quantity-container">
+                                        <button style="border-radius: 7px;" class="quantity-button" id="minus-button-{{ item.id }}" onclick="calcMinusTotal('{{ item.id }}')">-</button>
+                                        <input type="number" class="quantity-input" id="qty-{{ item.id }}" value="{{ item.quantity }}">
+                                        <button style="border-radius: 7px;" class="quantity-button" id="plus-button-{{ item.id }}" onclick="calcPlusTotal('{{ item.id }}')">+</button>
+                                    </div>
+                                </td>
+                                <td class="align-middle"><span name="order-total" id="total-{{ item.id }}">{{ item.get_total_price }}</span> AZN</td>
+                                <td class="align-middle"><button onclick="removeRow('#{{ item.id }}', '{{ item.id }}')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
