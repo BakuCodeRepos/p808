@@ -28,6 +28,11 @@ class Category(BaseModel):
         blank=True
     )
     is_parent = models.BooleanField(default=False)
+    image = models.ImageField(
+        upload_to='categories',
+        null=True,
+        blank=True
+    )
 
     def __str__(self) -> str:
         return self.name
