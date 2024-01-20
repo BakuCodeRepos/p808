@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from account.models import SubscribedUser
+from django.shortcuts import redirect, render
 from product.models import Category, Product
 
 
@@ -13,3 +14,15 @@ def index(request):
         'just_arrived_products': just_arrived_products
     }
     return render(request, 'home/index.html', context)
+
+
+def subscribe(request):
+    email = request.POST.get('subscribed_user')
+
+    if request.user.is_authenticated:
+        if request.user.email == email:
+            if not SubscribedUser.objects.filter(email=email).first():
+                SubscribedUser.objects.create(email=email)
+                
+                return redirect('/')
+    return redirect('/')

@@ -1,4 +1,3 @@
-from itertools import chain
 from typing import Any
 
 from django.db.models.query import QuerySet
@@ -31,19 +30,19 @@ class ProductListView(generic.ListView):
                 qs = qs.order_by('price')
             elif our_filter == 'decreased_price':
                 qs = qs.order_by('-price')
-        if 'price' in self.request.GET:
-            price = self.request.GET.getlist('price')
-            if 'all' not in price:
-                res = []
-                for item in price:
-                    start, stop = map(int, item.split('-'))
-                    new = qs.filter(price__range=[start, stop])
-                    res.append(new)
-            qs = list(chain(*res))
+        if 'start_price' in self.request.GET and 'end_price' in self.request.GET:
+            start_price = int(self.request.GET.get('start_price'))
+            end_price = int(self.request.GET.get('end_price'))
+            qs = qs.filter(price__range=[start_price, end_price])
         return qs
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        if 'start_price' in self.request.GET and 'end_price' in self.request.GET:
+            start_price = int(self.request.GET.get('start_price'))
+            end_price = int(self.request.GET.get('end_price'))
+            context['start_price'] = start_price
+            context['end_price'] = end_price
         if 'filter' in self.request.GET:
             our_filter = self.request.GET['filter']
             if our_filter == 'latest':

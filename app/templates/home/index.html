@@ -130,11 +130,12 @@
                     <h2 class="section-title px-5 mb-3"><span class="bg-secondary px-2">Stay Updated</span></h2>
                     <p>Amet lorem at rebum amet dolores. Elitr lorem dolor sed amet diam labore at justo ipsum eirmod duo labore labore.</p>
                 </div>
-                <form action="">
+                <form action="{% url 'subscribe' %}" method="POST">
+                    {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" class="form-control border-white p-4" placeholder="Email Goes Here">
+                        <input type="text" name="subscribed_user" class="form-control border-white p-4" placeholder="Email Goes Here">
                         <div class="input-group-append">
-                            <button class="btn btn-primary px-4">Subscribe</button>
+                            <button type="submit" class="btn btn-primary px-4">Subscribe</button>
                         </div>
                     </div>
                 </form>
