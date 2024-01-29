@@ -1,5 +1,8 @@
-from account.models import SubscribedUser
 from django.shortcuts import redirect, render
+from django.contrib import messages
+from django.utils.translation import gettext as _
+from django.core.mail import send_mail
+from account.models import SubscribedUser
 from product.models import Category, Product
 
 
@@ -23,6 +26,20 @@ def subscribe(request):
         if request.user.email == email:
             if not SubscribedUser.objects.filter(email=email).first():
                 SubscribedUser.objects.create(email=email)
-                
+                messages.success(request, _('Congratulations! You have subscribed successfully!'))
+                # send_mail(
+                #     'Subscription',
+                #     'Congratulations! You have subscribed successfully!',
+                #     'notificationtodo@gmail.com',
+                #     [request.user.email]
+                # )
                 return redirect('/')
+            else:
+                messages.error(request, _('Ooops! You have subscribed already!'))
+                return redirect('/')
+        else:
+            messages.error(request, _("Ooops! This email doesn't belong to you!"))
+            return redirect('/')
+    else:
+        messages.error(request, _("Looks like you are not logged in, please log in to subscribe"))
     return redirect('/')

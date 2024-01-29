@@ -36,7 +36,7 @@ class ProductListView(generic.ListView):
             qs = qs.filter(price__range=[start_price, end_price])
         return qs
     
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
         if 'start_price' in self.request.GET and 'end_price' in self.request.GET:
             start_price = int(self.request.GET.get('start_price'))

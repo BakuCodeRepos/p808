@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     "order.apps.OrderConfig",
     'modeltranslation',
     'rest_framework',
+    'celery',
+    'django_celery_results',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -97,10 +100,10 @@ WSGI_APPLICATION = "app.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "p808_db",
-        "USER": "p808_user",
-        "PASSWORD": "d8y46KEACjMtdpeRf5TaMjCod1gtBlh2A8XfFs0zrga7iMaeNuRf5SL95hvbEhy7w",
-        "HOST": "localhost",
+        "NAME": "app_db",
+        "USER": "app_user",
+        "PASSWORD": "mMrI85kkCvBrutRk4uKZAH1HwBGVUPORtqJ96uRyej7APfl5VmreCs1dex59lKQIZ",
+        "HOST": "postgres",
         "PORT": "5432",
     }
 }
@@ -170,3 +173,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login'
+
+# email conf
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASS'))

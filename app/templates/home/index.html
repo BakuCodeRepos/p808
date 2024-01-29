@@ -33,6 +33,16 @@
     </div>
     <!-- Featured End -->
 
+    {% if messages %}
+    {% for message in messages %}
+        <center>
+            <div class="alert alert-{{ message.tags }}" style="font-size: xx-large;">
+                {{ message }}
+            </div>
+        </center>
+    {% endfor %}
+    {% endif %}
+
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5 pb-3">
