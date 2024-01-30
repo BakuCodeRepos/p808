@@ -18,11 +18,11 @@ services:
 
   app:
     container_name: app
-    build: .
+    build: ../..
     restart: "always"
     env_file: .env
     environment:
-      - VIRTUAL_HOST=66.666.666.666 # this is example, replace this with your server IP
+      - VIRTUAL_HOST=138.68.67.113
       - VIRTUAL_PORT=8000
       - HTTP_PORT=8000
       - STATS_PORT=8001
@@ -59,7 +59,7 @@ services:
 
   celery:
     restart: "always"
-    build: .
+    build: ../..
     container_name: celery
     env_file: .env
     command: celery --app=app.celery:app worker -B --loglevel=INFO
